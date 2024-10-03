@@ -1,6 +1,5 @@
 ﻿using FraudeOdontologica.Domain.Entities;
 using FraudeOdontologica.Presentation.Controllers.Domain.Repositories;
-
 namespace FraudeOdontologica.Presentation.Controllers.Application.Services;
 
 public class ConsultaService

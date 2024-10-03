@@ -1,7 +1,6 @@
 ﻿using FraudeOdontologica.Domain.Entities;
 using FraudeOdontologica.Presentation.Controllers.Application.Services;
 using Microsoft.AspNetCore.Mvc;
-
 namespace FraudeOdontologica.Presentation.Controllers.Presentation.Controllers;
 
 [ApiController]

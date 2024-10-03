@@ -1,7 +1,6 @@
 ﻿using FraudeOdontologica.Domain.Entities;
 using FraudeOdontologica.Presentation.Controllers.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-
 namespace FraudeOdontologica.Infrastructure.Data;
 
 public class PacienteRepository : IRepository<Paciente>

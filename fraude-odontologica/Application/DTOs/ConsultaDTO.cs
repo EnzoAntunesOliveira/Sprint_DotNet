@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace FraudeOdontologica.Application.DTOs
 
 {

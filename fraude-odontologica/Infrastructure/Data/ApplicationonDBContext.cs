@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FraudeOdontologica.Domain.Entities;
+namespace FraudeOdontologica.Infrastructure.Data;
 
-namespace FraudeOdontologica.Infrastructure.Data
-{
+    
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Paciente> Pacientes { get; set; }
@@ -48,4 +48,3 @@ namespace FraudeOdontologica.Infrastructure.Data
     }
 
     
-}
