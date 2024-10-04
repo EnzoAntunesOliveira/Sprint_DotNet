@@ -1,5 +1,12 @@
 {
   "ConnectionStrings": {
-    "FiapOracleConnection" : "Data Source=//oracle.fiap.com.br:1521/orcl;UserId=rm552752; Password=110900;"
-  }
+    "FiapOracleConnection": "Data Source=//oracle.fiap.com.br:1521/orcl;User Id=rm552752;Password=110900;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
 }
