@@ -58,3 +58,7 @@ O escopo do projeto inclui:
 
 4. **Infraestrutura**:
     - Esta camada é responsável pelo acesso a dados, incluindo o contexto do banco de dados e a configuração da conexão. Ela também pode incluir a integração com outras APIs e serviços externos.
+  
+## Como rodar 
+
+- Tem que rodar no run **fraude-odontologica: IIS Express** e então irá automaticamente para o swagger para testar as APIs no `http://localhost:8080/index.html`
