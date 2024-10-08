@@ -1,6 +1,7 @@
-﻿using FraudeOdontologica.Domain.Entities;
-using FraudeOdontologica.Presentation.Controllers.Domain.Repositories;
-namespace FraudeOdontologica.Presentation.Controllers.Application.Services;
+﻿using fraude_odontologica.Domain.Entities;
+using fraude_odontologica.Domain.Repositories;
+
+namespace fraude_odontologica.Application.Services;
 
 public class PacienteService
 {

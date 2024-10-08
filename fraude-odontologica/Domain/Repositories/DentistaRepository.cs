@@ -1,7 +1,8 @@
-﻿using FraudeOdontologica.Domain.Entities;
-using FraudeOdontologica.Infrastructure.Data;
+﻿using fraude_odontologica.Domain.Entities;
+using fraude_odontologica.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-namespace FraudeOdontologica.Presentation.Controllers.Domain.Repositories;
+
+namespace fraude_odontologica.Domain.Repositories;
 
 public class DentistaRepository : IRepository<Dentista>
 {

@@ -1,4 +1,4 @@
-﻿namespace FraudeOdontologica.Domain.Entities;
+﻿namespace fraude_odontologica.Domain.Entities;
 
 public class ErrorViewModel
 {

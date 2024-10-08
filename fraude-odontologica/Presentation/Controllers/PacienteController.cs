@@ -1,7 +1,8 @@
-﻿using FraudeOdontologica.Domain.Entities;
-using FraudeOdontologica.Presentation.Controllers.Application.Services;
+﻿using fraude_odontologica.Application.Services;
+using fraude_odontologica.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-namespace FraudeOdontologica.Presentation.Controllers.Presentation.Controllers;
+
+namespace fraude_odontologica.Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -35,13 +36,13 @@ public class PacientesController : ControllerBase
     public async Task<IActionResult> PostPaciente(Paciente paciente)
     {
         await _pacienteService.AdicionarPacienteAsync(paciente);
-        return CreatedAtAction(nameof(GetPaciente), new { id = paciente.Id }, paciente);
+        return CreatedAtAction(nameof(GetPaciente), new { id = paciente.IdPaciente }, paciente);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> PutPaciente(int id, Paciente paciente)
     {
-        if (id != paciente.Id)
+        if (id != paciente.IdPaciente)
             return BadRequest();
 
         await _pacienteService.AtualizarPacienteAsync(paciente);

@@ -1,4 +1,4 @@
-﻿namespace FraudeOdontologica.Presentation.Controllers.Domain.Repositories;
+﻿namespace fraude_odontologica.Domain.Repositories;
 
 public interface IRepository<T>
 {
