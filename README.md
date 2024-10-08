@@ -61,4 +61,5 @@ O escopo do projeto inclui:
   
 ## Como rodar 
 
-- Tem que rodar no run **fraude-odontologica: IIS Express** e então irá automaticamente para o swagger para testar as APIs no `http://localhost:8080/index.html`
+- Rodar diretamente pela IDE (Rider) ou com o comando "dotnet run" (Visual Studio) para automaticamente abrir o Swagger e testar as APIs no `http://localhost:5000/index.html`
+- Por enquanto, os endpoints adicionados foram de CRUD para Paciente e Dentista. Futuramente, serão adicionados para registrar consultas, pagamentos, tratamentos e sinistros.
