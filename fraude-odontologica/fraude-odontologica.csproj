@@ -25,4 +25,8 @@
       </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Presentation\Views\Consulta\Create.cshtml.cs" />
+    </ItemGroup>
+
 </Project>

@@ -2,6 +2,8 @@
 using fraude_odontologica.Application.Services;
 using fraude_odontologica.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace fraude_odontologica.Presentation.Controllers
 {
@@ -21,7 +23,6 @@ namespace fraude_odontologica.Presentation.Controllers
         {
             var consultas = await _consultaService.ListarTodosConsultasAsync();
 
-            // Mapeando as consultas para o DTO de resposta
             var consultasResponse = consultas.Select(c => new ConsultaResponseDTO
             {
                 IdConsulta = c.IdConsulta,
@@ -55,7 +56,7 @@ namespace fraude_odontologica.Presentation.Controllers
         {
             var consulta = await _consultaService.BuscarConsultaPorIdAsync(id);
             if (consulta == null)
-                return NotFound();
+                return NotFound(new { message = "Consulta não encontrada." });
 
             var consultaResponse = new ConsultaResponseDTO
             {
@@ -86,25 +87,51 @@ namespace fraude_odontologica.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostConsulta([FromBody] Consulta consulta)
+        public async Task<IActionResult> PostConsulta([FromBody] ConsultaRequestDTO consultaDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var consulta = new Consulta
+            {
+                DataConsulta = consultaDto.DataConsulta,
+                CustoConsulta = consultaDto.CustoConsulta,
+                TipoTratamento = consultaDto.TipoTratamento,
+                PacienteId = consultaDto.PacienteId,
+                DentistaId = consultaDto.DentistaId
+            };
+
             await _consultaService.AdicionarConsultaAsync(consulta);
             return CreatedAtAction(nameof(GetConsulta), new { id = consulta.IdConsulta }, consulta);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutConsulta(int id, [FromBody] Consulta consulta)
+        public async Task<IActionResult> PutConsulta(int id, [FromBody] ConsultaRequestDTO consultaDto)
         {
-            if (id != consulta.IdConsulta)
-                return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            await _consultaService.AtualizarConsultaAsync(consulta);
+            var consultaExistente = await _consultaService.BuscarConsultaPorIdAsync(id);
+            if (consultaExistente == null)
+                return NotFound(new { message = "Consulta não encontrada para atualização." });
+
+            consultaExistente.DataConsulta = consultaDto.DataConsulta;
+            consultaExistente.CustoConsulta = consultaDto.CustoConsulta;
+            consultaExistente.TipoTratamento = consultaDto.TipoTratamento;
+            consultaExistente.PacienteId = consultaDto.PacienteId;
+            consultaExistente.DentistaId = consultaDto.DentistaId;
+
+            await _consultaService.AtualizarConsultaAsync(consultaExistente);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConsulta(int id)
         {
+            var consultaExistente = await _consultaService.BuscarConsultaPorIdAsync(id);
+            if (consultaExistente == null)
+                return NotFound(new { message = "Consulta não encontrada para exclusão." });
+
             await _consultaService.RemoverConsultaAsync(id);
             return NoContent();
         }

@@ -15,7 +15,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("FiapOracleConnection")));
 
-
 builder.Services.AddScoped<IRepository<Paciente>, PacienteRepository>();
 builder.Services.AddScoped<IRepository<Dentista>, DentistaRepository>();
 builder.Services.AddScoped<IRepository<Consulta>, ConsultaRepository>();
@@ -23,11 +22,7 @@ builder.Services.AddScoped<DentistaService>();
 builder.Services.AddScoped<ConsultaService>();
 builder.Services.AddScoped<PacienteService>();
 
-
-
-builder.Services.AddControllers();
-
-
+builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -49,9 +44,32 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; 
     });
 }
-    
 
-app.UseHttpsRedirection(); 
+app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+    
+    endpoints.MapControllerRoute(
+        name: "consultas",
+        pattern: "consultas/{action=Index}/{id?}",
+        defaults: new { controller = "Consulta" });
+    
+    endpoints.MapControllerRoute(
+        name: "dentistas",
+        pattern: "dentistas/{action=Index}/{id?}",
+        defaults: new { controller = "Dentista" });
+    
+    endpoints.MapControllerRoute(
+        name: "pacientes",
+        pattern: "pacientes/{action=Index}/{id?}",
+        defaults: new { controller = "Paciente" });
+});
+
 app.MapControllers();
 app.Run();
