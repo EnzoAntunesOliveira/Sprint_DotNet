@@ -1,12 +1,12 @@
 ﻿using fraude_odontologica.Application.Services;
 using fraude_odontologica.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace fraude_odontologica.Presentation.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class DentistasController : ControllerBase
+    [Route("dentistas")]
+    public class DentistasController : Controller
     {
         private readonly DentistaService _dentistaService;
 
@@ -16,44 +16,26 @@ namespace fraude_odontologica.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetDentistas()
+        public async Task<IActionResult> Index()
         {
             var dentistas = await _dentistaService.ListarTodosDentistasAsync();
-            return Ok(dentistas);
+            return View(dentistas);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetDentista(int id)
+        [HttpGet("create")]
+        public IActionResult Create()
         {
-            var dentista = await _dentistaService.BuscarDentistaPorIdAsync(id);
-            if (dentista == null)
-                return NotFound();
-
-            return Ok(dentista);
+            return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> PostDentista(Dentista dentista)
+        [HttpPost("create")]
+        public async Task<IActionResult> Create(Dentista dentista)
         {
+            if (!ModelState.IsValid)
+                return View(dentista);
+
             await _dentistaService.AdicionarDentistaAsync(dentista);
-            return CreatedAtAction(nameof(GetDentista), new { id = dentista.IdDentista }, dentista);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDentista(int id, Dentista dentista)
-        {
-            if (id != dentista.IdDentista)
-                return BadRequest();
-
-            await _dentistaService.AtualizarDentistaAsync(dentista);
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDentista(int id)
-        {
-            await _dentistaService.RemoverDentistaAsync(id);
-            return NoContent();
+            return RedirectToAction("Index");
         }
     }
 }

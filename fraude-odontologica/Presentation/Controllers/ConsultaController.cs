@@ -4,22 +4,27 @@ using fraude_odontologica.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace fraude_odontologica.Presentation.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ConsultasController : ControllerBase
+    [Route("consultas")]
+    public class ConsultasController : Controller
     {
         private readonly ConsultaService _consultaService;
+        private readonly PacienteService _pacienteService;
+        private readonly DentistaService _dentistaService;
 
-        public ConsultasController(ConsultaService consultaService)
+        public ConsultasController(ConsultaService consultaService, PacienteService pacienteService, DentistaService dentistaService)
         {
-            _consultaService = consultaService;
+            _consultaService = consultaService ?? throw new ArgumentNullException(nameof(consultaService));
+            _pacienteService = pacienteService ?? throw new ArgumentNullException(nameof(pacienteService));
+            _dentistaService = dentistaService ?? throw new ArgumentNullException(nameof(dentistaService));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetConsultas()
+        public async Task<IActionResult> Index()
         {
             var consultas = await _consultaService.ListarTodosConsultasAsync();
 
@@ -29,7 +34,7 @@ namespace fraude_odontologica.Presentation.Controllers
                 DataConsulta = c.DataConsulta,
                 CustoConsulta = c.CustoConsulta,
                 TipoTratamento = c.TipoTratamento,
-                Paciente = new PacienteResponseDTO
+                Paciente = c.Paciente == null ? null : new PacienteResponseDTO
                 {
                     IdPaciente = c.Paciente.IdPaciente,
                     Nome = c.Paciente.Nome,
@@ -39,7 +44,7 @@ namespace fraude_odontologica.Presentation.Controllers
                     Telefone = c.Paciente.Telefone,
                     Email = c.Paciente.Email
                 },
-                Dentista = new DentistaResponseDTO
+                Dentista = c.Dentista == null ? null : new DentistaResponseDTO
                 {
                     IdDentista = c.Dentista.IdDentista,
                     Nome = c.Dentista.Nome,
@@ -48,92 +53,52 @@ namespace fraude_odontologica.Presentation.Controllers
                 }
             }).ToList();
 
-            return Ok(consultasResponse);
+            return View(consultasResponse);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetConsulta(int id)
+        [HttpGet("create")]
+        public async Task<IActionResult> Create()
         {
-            var consulta = await _consultaService.BuscarConsultaPorIdAsync(id);
-            if (consulta == null)
-                return NotFound(new { message = "Consulta não encontrada." });
-
-            var consultaResponse = new ConsultaResponseDTO
+            var viewModel = new ConsultaViewModel
             {
-                IdConsulta = consulta.IdConsulta,
-                DataConsulta = consulta.DataConsulta,
-                CustoConsulta = consulta.CustoConsulta,
-                TipoTratamento = consulta.TipoTratamento,
-                Paciente = new PacienteResponseDTO
-                {
-                    IdPaciente = consulta.Paciente.IdPaciente,
-                    Nome = consulta.Paciente.Nome,
-                    CPF = consulta.Paciente.CPF,
-                    DataNascimento = consulta.Paciente.DataNascimento,
-                    PlanoSaude = consulta.Paciente.PlanoSaude,
-                    Telefone = consulta.Paciente.Telefone,
-                    Email = consulta.Paciente.Email
-                },
-                Dentista = new DentistaResponseDTO
-                {
-                    IdDentista = consulta.Dentista.IdDentista,
-                    Nome = consulta.Dentista.Nome,
-                    CRO = consulta.Dentista.CRO,
-                    Especialidade = consulta.Dentista.Especialidade
-                }
+                Pacientes = await ObterPacientesSelectList(),
+                Dentistas = await ObterDentistasSelectList()
             };
 
-            return Ok(consultaResponse);
+            return View(viewModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> PostConsulta([FromBody] ConsultaRequestDTO consultaDto)
+        [HttpPost("create")]
+        public async Task<IActionResult> Create(ConsultaViewModel consultaViewModel)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            {
+                consultaViewModel.Pacientes = await ObterPacientesSelectList();
+                consultaViewModel.Dentistas = await ObterDentistasSelectList();
+                return View(consultaViewModel);
+            }
 
             var consulta = new Consulta
             {
-                DataConsulta = consultaDto.DataConsulta,
-                CustoConsulta = consultaDto.CustoConsulta,
-                TipoTratamento = consultaDto.TipoTratamento,
-                PacienteId = consultaDto.PacienteId,
-                DentistaId = consultaDto.DentistaId
+                DataConsulta = consultaViewModel.DataConsulta,
+                PacienteId = consultaViewModel.PacienteId,
+                DentistaId = consultaViewModel.DentistaId
             };
 
             await _consultaService.AdicionarConsultaAsync(consulta);
-            return CreatedAtAction(nameof(GetConsulta), new { id = consulta.IdConsulta }, consulta);
+            return RedirectToAction("Index");
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutConsulta(int id, [FromBody] ConsultaRequestDTO consultaDto)
+        private async Task<IEnumerable<SelectListItem>> ObterPacientesSelectList()
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var consultaExistente = await _consultaService.BuscarConsultaPorIdAsync(id);
-            if (consultaExistente == null)
-                return NotFound(new { message = "Consulta não encontrada para atualização." });
-
-            consultaExistente.DataConsulta = consultaDto.DataConsulta;
-            consultaExistente.CustoConsulta = consultaDto.CustoConsulta;
-            consultaExistente.TipoTratamento = consultaDto.TipoTratamento;
-            consultaExistente.PacienteId = consultaDto.PacienteId;
-            consultaExistente.DentistaId = consultaDto.DentistaId;
-
-            await _consultaService.AtualizarConsultaAsync(consultaExistente);
-            return NoContent();
+            var pacientes = await _pacienteService.ListarTodosPacientesAsync();
+            return pacientes.Select(p => new SelectListItem { Value = p.IdPaciente.ToString(), Text = p.Nome });
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteConsulta(int id)
+        private async Task<IEnumerable<SelectListItem>> ObterDentistasSelectList()
         {
-            var consultaExistente = await _consultaService.BuscarConsultaPorIdAsync(id);
-            if (consultaExistente == null)
-                return NotFound(new { message = "Consulta não encontrada para exclusão." });
-
-            await _consultaService.RemoverConsultaAsync(id);
-            return NoContent();
+            var dentistas = await _dentistaService.ListarTodosDentistasAsync();
+            return dentistas.Select(d => new SelectListItem { Value = d.IdDentista.ToString(), Text = d.Nome });
         }
     }
 }

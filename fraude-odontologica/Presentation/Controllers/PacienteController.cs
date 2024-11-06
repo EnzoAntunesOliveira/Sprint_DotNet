@@ -1,58 +1,41 @@
 ﻿using fraude_odontologica.Application.Services;
 using fraude_odontologica.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
-namespace fraude_odontologica.Presentation.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class PacientesController : ControllerBase
+namespace fraude_odontologica.Presentation.Controllers
 {
-    private readonly PacienteService _pacienteService;
-
-    public PacientesController(PacienteService pacienteService)
+    [Route("pacientes")]
+    public class PacientesController : Controller
     {
-        _pacienteService = pacienteService;
-    }
+        private readonly PacienteService _pacienteService;
 
-    [HttpGet]
-    public async Task<IActionResult> GetPacientes()
-    {
-        var pacientes = await _pacienteService.ListarTodosPacientesAsync();
-        return Ok(pacientes);
-    }
+        public PacientesController(PacienteService pacienteService)
+        {
+            _pacienteService = pacienteService;
+        }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetPaciente(int id)
-    {
-        var paciente = await _pacienteService.BuscarPacientePorIdAsync(id);
-        if (paciente == null)
-            return NotFound();
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var pacientes = await _pacienteService.ListarTodosPacientesAsync();
+            return View(pacientes);
+        }
 
-        return Ok(paciente);
-    }
+        [HttpGet("create")]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-    [HttpPost]
-    public async Task<IActionResult> PostPaciente(Paciente paciente)
-    {
-        await _pacienteService.AdicionarPacienteAsync(paciente);
-        return CreatedAtAction(nameof(GetPaciente), new { id = paciente.IdPaciente }, paciente);
-    }
+        [HttpPost("create")]
+        public async Task<IActionResult> Create(Paciente paciente)
+        {
+            if (!ModelState.IsValid)
+                return View(paciente);
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutPaciente(int id, Paciente paciente)
-    {
-        if (id != paciente.IdPaciente)
-            return BadRequest();
-
-        await _pacienteService.AtualizarPacienteAsync(paciente);
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeletePaciente(int id)
-    {
-        await _pacienteService.RemoverPacienteAsync(id);
-        return NoContent();
+            await _pacienteService.AdicionarPacienteAsync(paciente);
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<fraude_odontologica.Application.DTOs.ConsultaResponseDTO>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Consultas</title>
+</head>
+<body>
+    <h1>Lista de Consultas</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Data da Consulta</th>
+                <th>Custo</th>
+                <th>Tipo de Tratamento</th>
+                <th>Paciente</th>
+                <th>Dentista</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var consulta in Model)
+            {
+                <tr>
+                    <td>@consulta.IdConsulta</td>
+                    <td>@consulta.DataConsulta.ToString("dd/MM/yyyy")</td>
+                    <td>@consulta.CustoConsulta</td>
+                    <td>@consulta.TipoTratamento</td>
+                    <td>@consulta.Paciente?.Nome ?? "Sem Paciente"</td>
+                    <td>@consulta.Dentista?.Nome ?? "Sem Dentista"</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

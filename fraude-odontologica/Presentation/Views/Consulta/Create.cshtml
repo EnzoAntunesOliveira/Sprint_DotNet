@@ -1,8 +1,8 @@
-﻿@model ConsultaViewModel
+﻿@model fraude_odontologica.Application.DTOs.ConsultaViewModel
 
 <h2>Nova Consulta</h2>
 
-<form asp-action="Create">
+<form asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="PacienteId"></label>
         <select asp-for="PacienteId" class="form-control" asp-items="Model.Pacientes">

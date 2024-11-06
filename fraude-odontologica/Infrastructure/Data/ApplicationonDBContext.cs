@@ -18,9 +18,9 @@ namespace fraude_odontologica.Infrastructure.Data
         {
             modelBuilder.Entity<Paciente>(entity =>
             {
-                entity.ToTable("CH_PACIENTES"); // Nome da tabela no banco de dados
-                entity.HasKey(p => p.IdPaciente); // Defina a chave primária
-                entity.Property(p => p.IdPaciente).HasColumnName("ID_PACIENTE"); // Nome da coluna no banco de dados
+                entity.ToTable("CH_PACIENTES");
+                entity.HasKey(p => p.IdPaciente); 
+                entity.Property(p => p.IdPaciente).HasColumnName("ID_PACIENTE");
                 entity.Property(p => p.Nome).IsRequired().HasColumnName("NOME").HasColumnType("VARCHAR2(30)");
                 entity.Property(p => p.CPF).IsRequired();
                 entity.Property(p => p.DataNascimento).IsRequired().HasColumnName("DATA_NASCIMENTO").HasColumnType("DATE");
@@ -48,15 +48,18 @@ namespace fraude_odontologica.Infrastructure.Data
                 entity.Property(c => c.CustoConsulta).IsRequired().HasColumnName("CUSTO_CONSULTA").HasColumnType("NUMBER(10,2)");
                 entity.Property(c => c.TipoTratamento).IsRequired().HasColumnName("TIPO_TRATAMENTO").HasColumnType("VARCHAR2(50)");
 
-                // Configuração do relacionamento
+                
+                entity.Property(c => c.PacienteId).HasColumnName("ID_PACIENTE"); 
+                entity.Property(c => c.DentistaId).HasColumnName("ID_DENTISTA"); 
+
                 entity.HasOne(c => c.Paciente)
-                    .WithMany() // Se você não deseja manter uma coleção de consultas no paciente
-                    .HasForeignKey("ID_PACIENTE") // Nome da coluna no banco de dados
+                    .WithMany() 
+                    .HasForeignKey(c => c.PacienteId) 
                     .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(c => c.Dentista)
-                    .WithMany() // Se você não deseja manter uma coleção de consultas no dentista
-                    .HasForeignKey("ID_DENTISTA") // Nome da coluna no banco de dados
+                    .WithMany()
+                    .HasForeignKey(c => c.DentistaId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
             
