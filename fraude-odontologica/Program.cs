@@ -58,13 +58,13 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
         name: "consultas",
         pattern: "consultas/{action=Index}/{id?}",
-        defaults: new { controller = "Consulta" });
-    
+        defaults: new { controller = "Consultas" });
+
     endpoints.MapControllerRoute(
         name: "dentistas",
         pattern: "dentistas/{action=Index}/{id?}",
         defaults: new { controller = "Dentista" });
-    
+
     endpoints.MapControllerRoute(
         name: "pacientes",
         pattern: "pacientes/{action=Index}/{id?}",

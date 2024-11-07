@@ -1,0 +1,36 @@
+@model IEnumerable<fraude_odontologica.Application.DTOs.DentistaResponseDTO>
+
+@{
+ViewData["Title"] = "Lista de Dentistas";
+}
+
+<h2>Lista de Dentistas</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>CRO</th>
+        <th>Especialidade</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var dentista in Model)
+    {
+    <tr>
+        <td>@dentista.IdDentista</td>
+        <td>@dentista.Nome</td>
+        <td>@dentista.CRO</td>
+        <td>@dentista.Especialidade</td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@dentista.IdDentista" class="btn btn-warning">Editar</a>
+            <a asp-action="Delete" asp-route-id="@dentista.IdDentista" class="btn btn-danger">Excluir</a>
+        </td>
+    </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Novo Dentista</a>
