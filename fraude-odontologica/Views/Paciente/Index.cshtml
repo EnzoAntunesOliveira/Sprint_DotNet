@@ -1,36 +1,40 @@
 ﻿@model IEnumerable<fraude_odontologica.Application.DTOs.PacienteResponseDTO>
 
-<h2>Lista de Pacientes</h2>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Pacientes</title>
+</head>
+<body>
+<h1>Lista de Pacientes</h1>
 
 <table class="table">
     <thead>
     <tr>
+        <th>ID</th>
         <th>Nome</th>
         <th>CPF</th>
         <th>Data de Nascimento</th>
         <th>Plano de Saúde</th>
         <th>Telefone</th>
         <th>Email</th>
-        <th>Ações</th>
     </tr>
     </thead>
     <tbody>
     @foreach (var paciente in Model)
     {
     <tr>
+        <td>@paciente.IdPaciente</td>
         <td>@paciente.Nome</td>
         <td>@paciente.CPF</td>
         <td>@paciente.DataNascimento.ToString("dd/MM/yyyy")</td>
         <td>@paciente.PlanoSaude</td>
         <td>@paciente.Telefone</td>
         <td>@paciente.Email</td>
-        <td>
-            <a href="/pacientes/edit/@paciente.IdPaciente">Editar</a> |
-            <form method="post" action="/pacientes/delete/@paciente.IdPaciente" style="display:inline;">
-                <button type="submit">Excluir</button>
-            </form>
-        </td>
     </tr>
     }
     </tbody>
 </table>
+</body>
+</html>

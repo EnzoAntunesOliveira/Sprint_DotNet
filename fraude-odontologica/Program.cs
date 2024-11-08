@@ -11,7 +11,6 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("FiapOracleConnection")));
 
@@ -49,27 +48,24 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseRouting();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-    
-    endpoints.MapControllerRoute(
-        name: "consultas",
-        pattern: "consultas/{action=Index}/{id?}",
-        defaults: new { controller = "Consultas" });
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-    endpoints.MapControllerRoute(
-        name: "dentistas",
-        pattern: "dentistas/{action=Index}/{id?}",
-        defaults: new { controller = "Dentista" });
+app.MapControllerRoute(
+    name: "consultas",
+    pattern: "consultas/{action=Index}/{id?}",
+    defaults: new { controller = "Consultas" });
 
-    endpoints.MapControllerRoute(
-        name: "pacientes",
-        pattern: "pacientes/{action=Index}/{id?}",
-        defaults: new { controller = "Paciente" });
-});
+app.MapControllerRoute(
+    name: "dentistas",
+    pattern: "dentistas/{action=Index}/{id?}",
+    defaults: new { controller = "Dentista" });
+
+app.MapControllerRoute(
+    name: "pacientes",
+    pattern: "pacientes/{action=Index}/{id?}",
+    defaults: new { controller = "Paciente" });
 
 app.MapControllers();
 app.Run();

@@ -32,7 +32,7 @@ namespace fraude_odontologica.Presentation.Controllers
                 Email = p.Email
             }).ToList();
 
-            return View(pacientesResponse);
+            return View("Index", pacientesResponse); 
         }
 
         [HttpGet("create")]

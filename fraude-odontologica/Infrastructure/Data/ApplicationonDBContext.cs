@@ -22,7 +22,7 @@ namespace fraude_odontologica.Infrastructure.Data
                 entity.HasKey(p => p.IdPaciente); 
                 entity.Property(p => p.IdPaciente).HasColumnName("ID_PACIENTE");
                 entity.Property(p => p.Nome).IsRequired().HasColumnName("NOME").HasColumnType("VARCHAR2(30)");
-                entity.Property(p => p.CPF).IsRequired();
+                entity.Property(p => p.CPF).IsRequired().HasColumnName("CPF").HasColumnType("VARCHAR2(11)");
                 entity.Property(p => p.DataNascimento).IsRequired().HasColumnName("DATA_NASCIMENTO").HasColumnType("DATE");
                 entity.Property(p => p.PlanoSaude).IsRequired().HasColumnName("PLANO_SAUDE").HasColumnType("VARCHAR2(50)");
                 entity.Property(p => p.Telefone).IsRequired().HasColumnName("TELEFONE").HasColumnType("VARCHAR2(20)");
