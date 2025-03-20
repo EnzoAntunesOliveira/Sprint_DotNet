@@ -1,4 +1,4 @@
-## Definição do Projeto
+# Projeto FraudeOdontologica
 
 O projeto **FraudeOdontologica** tem como objetivo desenvolver um sistema de detecção de fraudes em convênios odontológicos, visando identificar conluios entre dentistas e pacientes. Este sistema permitirá que operadoras de planos de saúde odontológicos reduzam custos com fraudes, aumentando a eficiência na auditoria e controle de gastos.
 
@@ -24,6 +24,11 @@ O escopo do projeto inclui:
 - Detecção de anomalias em dados de consultas e tratamentos.
 - Relatórios sobre fraudes identificadas e estatísticas relacionadas.
 
+### Funcionalidades Futuras
+
+- **Registro de Consultas**: Permitir o cadastro e gerenciamento de consultas realizadas entre pacientes e dentistas.
+- **Pagamentos e Sinistros**: Gerenciamento de pagamentos feitos pelas operadoras e registro de sinistros.
+
 ## Requisitos Funcionais
 
 1. **Cadastro de Pacientes**: Permitir o registro de informações de pacientes, incluindo nome, CPF, e dados de contato.
@@ -40,10 +45,9 @@ O escopo do projeto inclui:
 3. **Escalabilidade**: O sistema deve ser capaz de lidar com um número crescente de usuários e dados.
 4. **Usabilidade**: A interface do usuário deve ser intuitiva e fácil de usar.
 
-
 ## Desenho da Arquitetura
 
-
+A arquitetura adotada é **Monolítica**, onde todas as funcionalidades estão integradas em um único projeto. A escolha por uma arquitetura monolítica se deu pela simplicidade e rapidez na implementação, dado que a aplicação não exige uma grande escalabilidade desde o início. A estrutura do projeto segue o modelo tradicional de camadas, divididas entre apresentação, aplicação, domínio e infraestrutura.
 
 ### Camadas da Aplicação
 
@@ -58,8 +62,14 @@ O escopo do projeto inclui:
 
 4. **Infraestrutura**:
     - Esta camada é responsável pelo acesso a dados, incluindo o contexto do banco de dados e a configuração da conexão. Ela também pode incluir a integração com outras APIs e serviços externos.
+
+## Design Patterns
+
+- **Builder**: Utilizado para a construção de objetos complexos, como consultas e tratamentos.
+- **Singleton**: Em breve, um gerenciador de configurações será implementado utilizando o padrão Singleton, garantindo que a configuração do sistema seja única e compartilhada por toda a aplicação.
   
 ## Como rodar 
 
 - Rodar diretamente pela IDE (Rider) ou com o comando "dotnet run" (Visual Studio) para automaticamente abrir o Swagger e testar as APIs no `http://localhost:5000/index.html`
-- Por enquanto, os endpoints adicionados foram de CRUD para Paciente e Dentista. Futuramente, serão adicionados para registrar consultas, pagamentos, tratamentos e sinistros.
+- Por enquanto, os endpoints adicionados foram de CRUD para Paciente e Dentista.
+
