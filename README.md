@@ -73,3 +73,8 @@ A arquitetura adotada é **Monolítica**, onde todas as funcionalidades estão i
 - Rodar diretamente pela IDE (Rider) ou com o comando "dotnet run" (Visual Studio) para automaticamente abrir o Swagger e testar as APIs no `http://localhost:5000/index.html`
 - Por enquanto, os endpoints adicionados foram de CRUD para Paciente e Dentista.
 
+## Autores
+
+- Arthur Fenili RM552752
+- Enzo Antunes Oliveira RM553185
+- Vinicio Raphael RM553813
