@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using fraude_odontologica.ViewModels;
 
 namespace fraude_odontologica.Presentation.Controllers
 {
@@ -28,13 +29,13 @@ namespace fraude_odontologica.Presentation.Controllers
         {
             var consultas = await _consultaService.ListarTodosConsultasAsync();
 
-            var consultasResponse = consultas.Select(c => new ConsultaResponseDTO
+            var consultasResponse = consultas.Select(c => new ConsultaResponseDto
             {
                 IdConsulta = c.IdConsulta,
                 DataConsulta = c.DataConsulta,
                 CustoConsulta = c.CustoConsulta,
                 TipoTratamento = c.TipoTratamento,
-                Paciente = c.Paciente == null ? null : new PacienteResponseDTO
+                Paciente = new PacienteResponseDto
                 {
                     IdPaciente = c.Paciente.IdPaciente,
                     Nome = c.Paciente.Nome,
@@ -44,7 +45,7 @@ namespace fraude_odontologica.Presentation.Controllers
                     Telefone = c.Paciente.Telefone,
                     Email = c.Paciente.Email
                 },
-                Dentista = c.Dentista == null ? null : new DentistaResponseDTO
+                Dentista = new DentistaResponseDto
                 {
                     IdDentista = c.Dentista.IdDentista,
                     Nome = c.Dentista.Nome,

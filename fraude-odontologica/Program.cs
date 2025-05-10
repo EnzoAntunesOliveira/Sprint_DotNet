@@ -1,7 +1,9 @@
 ﻿using fraude_odontologica.Application.Services;
 using fraude_odontologica.Domain.Entities;
+using fraude_odontologica.Domain.Ports;
 using fraude_odontologica.Domain.Repositories;
 using fraude_odontologica.Infrastructure.Data;
+using fraude_odontologica.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,12 +16,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("FiapOracleConnection")));
 
+builder.Services.AddSingleton<IFraudDetectionService, FraudDetectionService>();
 builder.Services.AddScoped<IRepository<Paciente>, PacienteRepository>();
 builder.Services.AddScoped<IRepository<Dentista>, DentistaRepository>();
 builder.Services.AddScoped<IRepository<Consulta>, ConsultaRepository>();
 builder.Services.AddScoped<DentistaService>();
 builder.Services.AddScoped<ConsultaService>();
 builder.Services.AddScoped<PacienteService>();
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +35,14 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 });
+
+builder.Services
+    .AddHttpClient<IExternalPaymentService, ExternalPaymentService>(c =>
+    {
+        c.BaseAddress = new Uri(builder.Configuration["ExternalServices:PaymentApi"]);
+        c.DefaultRequestHeaders.Add("Accept", "application/json");
+    });
+
 
 var app = builder.Build();
 

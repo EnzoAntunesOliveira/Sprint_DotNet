@@ -1,6 +1,6 @@
 ﻿namespace fraude_odontologica.Application.DTOs;
 
-public class PacienteResponseDTO
+public class PacienteResponseDto
 {
     public int IdPaciente { get; set; }
     public string Nome { get; set; }

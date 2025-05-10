@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
-namespace TesteProjeto
+namespace Tests
 {
     public class IntegrationTests : IClassFixture<WebApplicationFactory<Program>>
     {

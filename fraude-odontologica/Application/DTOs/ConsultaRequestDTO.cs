@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace fraude_odontologica.Application.DTOs
 {
-    public class ConsultaRequestDTO
+    public class ConsultaRequestDto
     {
         [Required(ErrorMessage = "A data da consulta é obrigatória.")]
         public DateTime DataConsulta { get; set; }

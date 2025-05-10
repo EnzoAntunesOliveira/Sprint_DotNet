@@ -32,7 +32,7 @@ public class PacienteRepository : IRepository<Paciente>
     public async Task DeleteAsync(int id)
     {
         var paciente = await _context.Pacientes.FindAsync(id);
-        _context.Pacientes.Remove(paciente);
+        if (paciente != null) _context.Pacientes.Remove(paciente);
         await _context.SaveChangesAsync();
     }
 }

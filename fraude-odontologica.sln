@@ -1,8 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fraude-odontologica", "fraude-odontologica\fraude-odontologica.csproj", "{3566E574-49A8-453C-A38F-4899554B4C94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteProjeto", "TesteProjeto\TesteProjeto.csproj", "{1B9A0E3B-A41F-4AD1-BC3C-8EBBF00899DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{1B9A0E3B-A41F-4AD1-BC3C-8EBBF00899DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ML", "ML", "{BF9C6042-FBC7-4C0C-97A4-1D74EC81506B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FraudeOdonto.ML", "ML\FraudeOdonto.ML\FraudeOdonto.ML.csproj", "{C31D4F05-364D-4331-8C81-552458CE3A6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +23,12 @@ Global
 		{1B9A0E3B-A41F-4AD1-BC3C-8EBBF00899DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B9A0E3B-A41F-4AD1-BC3C-8EBBF00899DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B9A0E3B-A41F-4AD1-BC3C-8EBBF00899DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C31D4F05-364D-4331-8C81-552458CE3A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C31D4F05-364D-4331-8C81-552458CE3A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C31D4F05-364D-4331-8C81-552458CE3A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C31D4F05-364D-4331-8C81-552458CE3A6B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C31D4F05-364D-4331-8C81-552458CE3A6B} = {BF9C6042-FBC7-4C0C-97A4-1D74EC81506B}
 	EndGlobalSection
 EndGlobal

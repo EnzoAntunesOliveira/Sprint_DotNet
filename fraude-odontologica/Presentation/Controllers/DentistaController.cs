@@ -21,7 +21,7 @@ namespace fraude_odontologica.Presentation.Controllers
         public async Task<IActionResult> Index()
         {
             var dentistas = await _dentistaService.ListarTodosDentistasAsync();
-            var dentistasResponse = dentistas.Select(d => new DentistaResponseDTO
+            var dentistasResponse = dentistas.Select(d => new DentistaResponseDto
             {
                 IdDentista = d.IdDentista,
                 Nome = d.Nome,
@@ -35,11 +35,11 @@ namespace fraude_odontologica.Presentation.Controllers
         [HttpGet("create")]
         public IActionResult Create()
         {
-            return View(new DentistaRequestDTO());
+            return View(new DentistaRequestDto());
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create(DentistaRequestDTO dentistaDto)
+        public async Task<IActionResult> Create(DentistaRequestDto dentistaDto)
         {
             if (!ModelState.IsValid)
             {
@@ -61,12 +61,8 @@ namespace fraude_odontologica.Presentation.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var dentista = await _dentistaService.BuscarDentistaPorIdAsync(id);
-            if (dentista == null)
-            {
-                return NotFound();
-            }
 
-            var dentistaDto = new DentistaRequestDTO
+            var dentistaDto = new DentistaRequestDto
             {
                 Nome = dentista.Nome,
                 CRO = dentista.CRO,
@@ -77,7 +73,7 @@ namespace fraude_odontologica.Presentation.Controllers
         }
 
         [HttpPost("edit/{id}")]
-        public async Task<IActionResult> Edit(int id, DentistaRequestDTO dentistaDto)
+        public async Task<IActionResult> Edit(int id, DentistaRequestDto dentistaDto)
         {
             if (!ModelState.IsValid)
             {
@@ -85,10 +81,6 @@ namespace fraude_odontologica.Presentation.Controllers
             }
 
             var dentista = await _dentistaService.BuscarDentistaPorIdAsync(id);
-            if (dentista == null)
-            {
-                return NotFound();
-            }
 
             dentista.Nome = dentistaDto.Nome;
             dentista.CRO = dentistaDto.CRO;

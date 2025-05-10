@@ -5,7 +5,7 @@ using fraude_odontologica.Domain.Entities;
 using fraude_odontologica.Domain.Repositories;
 using fraude_odontologica.Application.Services;
 
-namespace TesteProjeto
+namespace Tests
 {
     public class DentistaServiceTests
     {

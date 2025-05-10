@@ -21,7 +21,7 @@ namespace fraude_odontologica.Presentation.Controllers
         public async Task<IActionResult> Index()
         {
             var pacientes = await _pacienteService.ListarTodosPacientesAsync();
-            var pacientesResponse = pacientes.Select(p => new PacienteResponseDTO
+            var pacientesResponse = pacientes.Select(p => new PacienteResponseDto
             {
                 IdPaciente = p.IdPaciente,
                 Nome = p.Nome,
@@ -38,11 +38,11 @@ namespace fraude_odontologica.Presentation.Controllers
         [HttpGet("create")]
         public IActionResult Create()
         {
-            return View(new PacienteRequestDTO());
+            return View(new PacienteRequestDto());
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create(PacienteRequestDTO pacienteDto)
+        public async Task<IActionResult> Create(PacienteRequestDto pacienteDto)
         {
             if (!ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace fraude_odontologica.Presentation.Controllers
                 return NotFound();
             }
 
-            var pacienteDto = new PacienteRequestDTO
+            var pacienteDto = new PacienteRequestDto
             {
                 Nome = paciente.Nome,
                 CPF = paciente.CPF,
@@ -86,7 +86,7 @@ namespace fraude_odontologica.Presentation.Controllers
         }
 
         [HttpPost("edit/{id}")]
-        public async Task<IActionResult> Edit(int id, PacienteRequestDTO pacienteDto)
+        public async Task<IActionResult> Edit(int id, PacienteRequestDto pacienteDto)
         {
             if (!ModelState.IsValid)
             {

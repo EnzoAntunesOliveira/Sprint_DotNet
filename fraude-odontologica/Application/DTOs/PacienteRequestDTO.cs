@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace fraude_odontologica.Application.DTOs
 {
-    public class PacienteRequestDTO
+    public class PacienteRequestDto
     {
         [Required(ErrorMessage = "O nome do paciente é obrigatório.")]
         public string Nome { get; set; }

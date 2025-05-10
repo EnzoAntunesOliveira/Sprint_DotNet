@@ -2,7 +2,7 @@
 
 namespace fraude_odontologica.Application.DTOs
 {
-    public class DentistaRequestDTO
+    public class DentistaRequestDto
     {
         [Required(ErrorMessage = "O nome do dentista é obrigatório.")]
         public string Nome { get; set; }
