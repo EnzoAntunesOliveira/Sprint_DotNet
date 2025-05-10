@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
+using fraude_odontologica.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +25,15 @@ builder.Services.AddScoped<IRepository<Consulta>, ConsultaRepository>();
 builder.Services.AddScoped<DentistaService>();
 builder.Services.AddScoped<ConsultaService>();
 builder.Services.AddScoped<PacienteService>();
+builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ConsultaService>();
+builder.Services.AddScoped<PacienteService>();
+builder.Services.AddScoped<DentistaService>();
 
 
+
+
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

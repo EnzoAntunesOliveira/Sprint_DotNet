@@ -19,7 +19,7 @@ namespace fraude_odontologica.Infrastructure.Services
             };
             using var content = new FormUrlEncodedContent(form);
             
-            var response = await _http.PostAsync("/payment_intents", content);
+            var response = await _http.PostAsync("/v1/payment_intents", content);
             response.EnsureSuccessStatusCode();
             
             using var stream = await response.Content.ReadAsStreamAsync();
