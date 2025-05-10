@@ -32,6 +32,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ML\FraudeOdonto.ML\FraudeOdonto.ML.csproj" />
+      <ProjectReference Include="..\fraude-odontologica.Application\fraude-odontologica.Application.csproj" />
     </ItemGroup>
 
 </Project>
