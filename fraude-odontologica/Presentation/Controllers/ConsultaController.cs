@@ -35,7 +35,6 @@ namespace fraude_odontologica.Presentation.Controllers
         public async Task<IActionResult> Index()
         {
             var consultas = await _consultaService.ListarTodosConsultasAsync();
-            // mapeia tudo de uma vez
             var vm = _mapper.Map<IEnumerable<ConsultaResponseDto>>(consultas);
             return View(vm);
         }
@@ -58,15 +57,13 @@ namespace fraude_odontologica.Presentation.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // re-popular dropdowns
                 m.Pacientes = (await _pacienteService.ListarTodosPacientesAsync())
                                 .Select(p => new SelectListItem(p.Nome, p.IdPaciente.ToString()));
                 m.Dentistas = (await _dentistaService.ListarTodosDentistasAsync())
                                 .Select(d => new SelectListItem(d.Nome, d.IdDentista.ToString()));
                 return View(m);
             }
-
-            // mapeia ViewModel → DTO de request → entidade
+            
             ConsultaRequestDto dto = _mapper.Map<ConsultaRequestDto>(m);
             await _consultaService.AdicionarConsultaAsync(dto);
 

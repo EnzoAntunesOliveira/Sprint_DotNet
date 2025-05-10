@@ -10,12 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Referência ao projeto WebAPI para encontrar Program -->
     <ProjectReference Include="..\..\fraude-odontologica\fraude-odontologica.csproj" />
-    <!-- WebApplicationFactory<TProgram> para testes de integração -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
 
-    <!-- Pacotes de teste e infraestrutura -->
+
+
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
